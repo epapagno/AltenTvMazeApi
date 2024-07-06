@@ -14,6 +14,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using AltenTvMazeRepositories.Interfaces;
+using AltenTvMazeRepositories;
 
 namespace AltenTvMazeApi
 {
@@ -30,6 +32,7 @@ namespace AltenTvMazeApi
         {
             services.AddDbContext<TvMazeContext>(options =>
                 options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddScoped<IShowRepository, ShowRepository>();
             services.AddHttpClient<ShowService>();
             services.AddControllers();
             services.AddMvc().AddNewtonsoftJson();

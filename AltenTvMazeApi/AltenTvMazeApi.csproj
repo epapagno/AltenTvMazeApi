@@ -17,5 +17,9 @@
     <ProjectReference Include="..\AltenTvMazeModels\AltenTvMazeModels.csproj" />
     <ProjectReference Include="..\AltenTvMazeServices\AltenTvMazeServices.csproj" />
   </ItemGroup>
+  
+  <ItemGroup>
+    <Folder Include="Middleware\" />
+  </ItemGroup>
 
 </Project>
