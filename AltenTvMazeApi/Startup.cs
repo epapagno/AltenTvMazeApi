@@ -2,11 +2,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using AltenTvMazeApi.Services;
+using AltenTvMazeServices;
+using AltenTvMazeRepositories.Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -26,19 +28,18 @@ namespace AltenTvMazeApi
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDbContext<TvMazeContext>(options =>
+                options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddHttpClient<ShowService>();
             services.AddControllers();
-            services.AddHttpClient<TvMazeService>();
             services.AddMvc().AddNewtonsoftJson();
 
-            // Configurar Swagger
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo
-                {
-                    Title = "TvMaze API",
-                    Version = "v1"
-                });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "TvMaze API", Version = "v1" });
             });
+
+            //services.AddHostedService<TimedHostedService>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -50,7 +51,7 @@ namespace AltenTvMazeApi
                 app.UseSwaggerUI(c =>
                 {
                     c.SwaggerEndpoint("/swagger/v1/swagger.json", "TvMaze API V1");
-                    c.RoutePrefix = string.Empty; // Para que Swagger UI esté en la raíz
+                    c.RoutePrefix = "swagger";
                 });
             }
 

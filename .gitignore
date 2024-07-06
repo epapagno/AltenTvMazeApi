@@ -7,6 +7,10 @@
 .vs/AltenTvMazeApi/v16/.suo
 .vs/AltenTvMazeApi/bin
 .vs/AltenTvMazeApi/obj
+**/bin/Release
+**/bin/Debug
+**/obj
+AltenTvMazeApi/obj/*
 *.bin
 
 *.ide

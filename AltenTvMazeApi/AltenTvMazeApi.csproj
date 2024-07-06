@@ -12,5 +12,10 @@
     <PackageReference Include="System.Net.Http.Json" Version="6.0.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
   </ItemGroup>
+  
+  <ItemGroup>
+    <ProjectReference Include="..\AltenTvMazeModels\AltenTvMazeModels.csproj" />
+    <ProjectReference Include="..\AltenTvMazeServices\AltenTvMazeServices.csproj" />
+  </ItemGroup>
 
 </Project>
