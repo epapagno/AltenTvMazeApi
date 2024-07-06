@@ -9,3 +9,6 @@
 .vs/AltenTvMazeApi/obj
 *.bin
 
+*.ide
+*.lock
+*.dll
