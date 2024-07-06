@@ -8,7 +8,9 @@
   </PropertyGroup>
   
   <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.31" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="6.0.31" />
+    <PackageReference Include="Microsoft.IdentityModel.Tokens" Version="6.35.0" />
     <PackageReference Include="System.Net.Http.Json" Version="6.0.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
   </ItemGroup>
@@ -16,10 +18,6 @@
   <ItemGroup>
     <ProjectReference Include="..\AltenTvMazeModels\AltenTvMazeModels.csproj" />
     <ProjectReference Include="..\AltenTvMazeServices\AltenTvMazeServices.csproj" />
-  </ItemGroup>
-  
-  <ItemGroup>
-    <Folder Include="Middleware\" />
   </ItemGroup>
 
 </Project>
