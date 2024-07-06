@@ -1,5 +1,6 @@
 ﻿using AltenTvMazeModels;
 using AltenTvMazeServices;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -34,6 +35,7 @@ namespace AltenTvMazeApi.Controllers
             return await _showService.GetAllShowsAsync();
         }
 
+        [Authorize]
         [HttpPut("update")]
         public async Task<IActionResult> UpdateShows()
         {

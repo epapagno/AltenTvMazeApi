@@ -9,5 +9,6 @@
         public string Premiered { get; set; }
         public string? OfficialSite { get; set; }
         public string Summary { get; set; }
+        public DateTime LastUpdatedDate { get; set; }
     }
 }

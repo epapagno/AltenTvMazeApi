@@ -17,17 +17,17 @@ namespace AltenTvMazeServices
 
         public async Task<Show> GetShowByIdAsync(int id)
         {
-            return await _httpClient.GetFromJsonAsync<Show>($"https://api.tvmaze.com/shows/{id}");
+            return await _showRepository.GetShowByIdAsync(id);
         }
 
         public async Task<IEnumerable<Show>> GetAllShowsAsync()
         {
-            return await _httpClient.GetFromJsonAsync<IEnumerable<Show>>("https://api.tvmaze.com/shows");
+            return await _showRepository.GetAllShowsAsync();
         }
 
         public async Task UpdateDatabaseAsync()
         {
-            var shows = await GetAllShowsAsync();
+            var shows = await _httpClient.GetFromJsonAsync<IEnumerable<Show>>("https://api.tvmaze.com/shows");
             foreach (var show in shows)
             {
                 var existingShow = await _showRepository.GetShowByIdAsync(show.Id);
@@ -38,12 +38,16 @@ namespace AltenTvMazeServices
                 }
                 else
                 {
-                    existingShow.Name = show.Name;
-                    existingShow.Language = show.Language;
-                    existingShow.Premiered = show.Premiered;
-                    existingShow.OfficialSite = show.OfficialSite;
-                    existingShow.Summary = show.Summary;
-                    await _showRepository.UpdateShowAsync(existingShow);
+                    if(TimeSpan.FromDays(DateTime.Now.Ticks - existingShow.LastUpdatedDate.Ticks).TotalDays > 1)
+                    {
+                        existingShow.Name = show.Name;
+                        existingShow.Language = show.Language;
+                        existingShow.Premiered = show.Premiered;
+                        existingShow.OfficialSite = show.OfficialSite;
+                        existingShow.Summary = show.Summary;
+                        existingShow.LastUpdatedDate = DateTime.Now;
+                        await _showRepository.UpdateShowAsync(existingShow);
+                    }                    
                 }
             }
             await _showRepository.SaveChangesAsync();

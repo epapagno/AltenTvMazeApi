@@ -1,21 +1,19 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using AltenTvMazeServices;
+using AltenTvMazeApi.Middleware;
+using AltenTvMazeRepositories;
 using AltenTvMazeRepositories.Data;
+using AltenTvMazeRepositories.Interfaces;
+using AltenTvMazeServices;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using AltenTvMazeRepositories.Interfaces;
-using AltenTvMazeRepositories;
+using System.Collections.Generic;
+using System.Text;
 
 namespace AltenTvMazeApi
 {
@@ -37,9 +35,59 @@ namespace AltenTvMazeApi
             services.AddControllers();
             services.AddMvc().AddNewtonsoftJson();
 
+
+            // JWT Authentication
+            var jwtSection = Configuration.GetSection("Jwt");
+            services.Configure<JwtSettings>(jwtSection);
+
+            var jwtSettings = jwtSection.Get<JwtSettings>();
+            var key = Encoding.ASCII.GetBytes(jwtSettings.Key);
+
+            services.AddAuthentication(x =>
+            {
+                x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+            .AddJwtBearer(x =>
+            {
+                x.RequireHttpsMetadata = false;
+                x.SaveToken = true;
+                x.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
+                    ValidateLifetime = true,
+                    ValidateIssuerSigningKey = true,
+                    ValidIssuer = jwtSettings.Issuer,
+                    ValidAudience = jwtSettings.Audience,
+                    IssuerSigningKey = new SymmetricSecurityKey(key)
+                };
+            });
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "TvMaze API", Version = "v1" });
+                // Swagger JWT Auth
+                c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+                {
+                    Description = "JWT Authorization header using the Bearer scheme. Example: \"Authorization: Bearer {token}\"",
+                    Name = "Authorization",
+                    In = ParameterLocation.Header,
+                    Type = SecuritySchemeType.ApiKey,
+                    Scheme = "Bearer"
+
+                });
+
+                c.AddSecurityRequirement(new OpenApiSecurityRequirement{
+                {
+                    new OpenApiSecurityScheme{
+                        Reference = new OpenApiReference{
+                            Id = "Bearer",
+                            Type = ReferenceType.SecurityScheme
+                        }
+                    },new List<string>()
+                }
+                });
             });
 
             //services.AddHostedService<TimedHostedService>();
@@ -50,18 +98,18 @@ namespace AltenTvMazeApi
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseSwagger();
-                app.UseSwaggerUI(c =>
-                {
-                    c.SwaggerEndpoint("/swagger/v1/swagger.json", "TvMaze API V1");
-                    c.RoutePrefix = "swagger";
-                });
             }
 
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "TvMaze API V1");
+                c.RoutePrefix = string.Empty;
+            });
+
             app.UseHttpsRedirection();
-
             app.UseRouting();
-
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
