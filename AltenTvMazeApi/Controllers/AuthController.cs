@@ -26,7 +26,7 @@ namespace AltenTvMazeApi.Controllers
         {
             // Esto es una demo.
             // En un entorno real, debe validar las credenciales contra una base de datos.
-            if (authRequest.Username == "admin" && authRequest.Password == "4dm1n")
+            if (authRequest.Username == "user" && authRequest.Password == "p455w0rd")
             {
                 var tokenHandler = new JwtSecurityTokenHandler();
                 var key = Encoding.ASCII.GetBytes(_jwtSettings.Key);
