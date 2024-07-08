@@ -1,5 +1,5 @@
 # AltenTvMazeApi
-Pre-Requisites:
+## Pre-Requisites:
 PostgreSQL
 
 - AltenTvMaze - Repositories: This layer has the data access and the dbcontext. As the connection string is added here to use migrations from the console.
