@@ -4,7 +4,7 @@ PostgreSQL
 
 - AltenTvMaze - Repositories: This layer has the data access and the dbcontext. As the connection string is added here to use migrations from the console. <u>In a production environment i used to use an appsettings file.</u>
 </br>
-<ul>
+<ol>
   <li>Change the connection string in AltenTvMazeRepositories/Data/TvMazeContext.cs line 14.</li>
   <li>In sh execute: dotnet ef database update -- project AltenTvMazeRepositories</li>
 </ul> 
