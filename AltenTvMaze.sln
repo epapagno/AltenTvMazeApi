@@ -5,11 +5,13 @@ VisualStudioVersion = 17.10.35013.160
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AltenTvMazeApi", "AltenTvMazeApi\AltenTvMazeApi.csproj", "{F848811F-7FAA-4032-A823-52A13252FF25}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AltenTvMazeRepositories", "AltenTvMazeRepositories\AltenTvMazeRepositories.csproj", "{E79B7D91-C0BA-4A3E-A380-E8BE41301E6F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AltenTvMazeRepositories", "AltenTvMazeRepositories\AltenTvMazeRepositories.csproj", "{E79B7D91-C0BA-4A3E-A380-E8BE41301E6F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AltenTvMazeModels", "AltenTvMazeModels\AltenTvMazeModels.csproj", "{784DAA5F-BD57-4CAC-99AF-2A9849706280}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AltenTvMazeModels", "AltenTvMazeModels\AltenTvMazeModels.csproj", "{784DAA5F-BD57-4CAC-99AF-2A9849706280}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AltenTvMazeServices", "AltenTvMazeServices\AltenTvMazeServices.csproj", "{08F0FAA7-0658-48F4-A6BB-EEFE59383242}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AltenTvMazeServices", "AltenTvMazeServices\AltenTvMazeServices.csproj", "{08F0FAA7-0658-48F4-A6BB-EEFE59383242}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AltenTvMazeApiService.Tests", "AltenTvMazeApiService.Tests\AltenTvMazeApiService.Tests.csproj", "{8DA0A065-9A4F-40C1-B331-EC25BCE225DA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{08F0FAA7-0658-48F4-A6BB-EEFE59383242}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{08F0FAA7-0658-48F4-A6BB-EEFE59383242}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{08F0FAA7-0658-48F4-A6BB-EEFE59383242}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8DA0A065-9A4F-40C1-B331-EC25BCE225DA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8DA0A065-9A4F-40C1-B331-EC25BCE225DA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8DA0A065-9A4F-40C1-B331-EC25BCE225DA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8DA0A065-9A4F-40C1-B331-EC25BCE225DA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
